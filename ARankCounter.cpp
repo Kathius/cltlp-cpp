@@ -69,8 +69,8 @@ ARankCounter::~ARankCounter()
 
 void ARankCounter::ProcessLine(string Line)
 {
-	static pcrecpp::RE re(REGEX_OPTIONAL_TIMESTAMP"•((?:Du|Deine?|Your?) .*)\\r\\n", pcrecpp::UTF8());
-	static pcrecpp::RE re2(REGEX_OPTIONAL_TIMESTAMP"("+Regexes["Trainers"]+") (?:sagt|says), \"(.*)\"\\r\\n", pcrecpp::UTF8());
+	static pcrecpp::RE re(REGEX_OPTIONAL_TIMESTAMP"•((?:Du|Deine?|Your?) .*)(\\r\\n)?$", pcrecpp::UTF8());
+	static pcrecpp::RE re2(REGEX_OPTIONAL_TIMESTAMP"("+Regexes["Trainers"]+") (?:sagt|says), \"(.*)\"(\\r\\n)?$", pcrecpp::UTF8());
 	string msg;
 	string trainer;
 	if (re.FullMatch(Line, &msg))
