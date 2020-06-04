@@ -1,6 +1,7 @@
 #include "stdio.h"
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <list>
 #include <map>
@@ -88,6 +89,7 @@ bool ARankCounter::CheckGameMessage(string msg)
 	if (RankMessages.find(msg) != RankMessages.end())
 	{
 		Ranks[RankMessages[msg]]++;
+		TrainedRanks[RankMessages[msg]]++;
 		return true;
 	}
 	return false;
@@ -109,9 +111,24 @@ bool ARankCounter::CheckTrainerMessage(string trainer, string msg)
 
 void ARankCounter::PrintRanks()
 {
+    unsigned int totalRanks = 0;
+    unsigned int totalTrainedRanks = 0;
+
 	for (iTrainer=Trainers.begin();iTrainer!=Trainers.end();iTrainer++)
 	{
-		if (Ranks[*iTrainer]==0) continue;
-		std::cout << *iTrainer << ": " << Ranks[*iTrainer] << std::endl;
+	    totalRanks += Ranks[*iTrainer];
+	    totalTrainedRanks += TrainedRanks[*iTrainer];
+		if (Ranks[*iTrainer] == 0 && TrainedRanks[*iTrainer] == 0 ) continue;
+		std::cout
+		    << std::setw(20) << *iTrainer << ": "
+		    << std::setw(4) << Ranks[*iTrainer]
+		    << " (" << TrainedRanks[*iTrainer] << ")"
+		    << std::endl;
 	}
+
+    std::cout << std::endl
+        << "Total: "
+        << totalRanks << std::endl
+        << "Total trained: " << totalTrainedRanks << ""
+        << std::endl;
 }

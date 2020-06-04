@@ -7,6 +7,7 @@ protected:
 	std::list<string> Trainers;
 	std::list<string>::iterator iTrainer;
 	std::map<string, int> Ranks;
+	std::map<string, int> TrainedRanks;
 	std::map<string, string> RankMessages;
 	std::list<string>::iterator iTrainerMsg;
 	std::map<string, int> TrainerMessages;

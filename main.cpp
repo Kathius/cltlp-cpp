@@ -13,7 +13,7 @@
 
 int main(int argc, char *argv[])
 {
-	printf("Arindal Text Log Processor 0.1\n");
+	printf("Arindal Text Log Processor\n\n");
 	
 	bool bLoad=false;
 	string arpath, character;
