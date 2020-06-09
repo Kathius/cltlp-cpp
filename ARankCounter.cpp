@@ -72,15 +72,20 @@ void ARankCounter::ProcessLine(string Line)
 {
 	static pcrecpp::RE re(REGEX_OPTIONAL_TIMESTAMP"•((?:Du|Deine?|Your?) .*)(\\r\\n)?$", pcrecpp::UTF8());
 	static pcrecpp::RE re2(REGEX_OPTIONAL_TIMESTAMP"("+Regexes["Trainers"]+") (?:sagt|says), \"(.*)\"(\\r\\n)?$", pcrecpp::UTF8());
+	static pcrecpp::RE petMessage(REGEX_OPTIONAL_TIMESTAMP"\\* (.*) grows stronger.(\\r\\n)?$", pcrecpp::UTF8());
 	string msg;
 	string trainer;
+	string pet;
 	if (re.FullMatch(Line, &msg))
 	{
 		CheckGameMessage(msg);
 	}else if (re2.FullMatch(Line, &trainer, &msg))
 	{
 		CheckTrainerMessage(trainer, msg);
-	}
+	}else if (petMessage.FullMatch(Line, &pet, &msg))
+    {
+        CheckPetMessage(pet, msg);
+    }
 }
 
 bool ARankCounter::CheckGameMessage(string msg)
@@ -96,7 +101,7 @@ bool ARankCounter::CheckGameMessage(string msg)
 }
 bool ARankCounter::CheckTrainerMessage(string trainer, string msg)
 {
-	static pcrecpp::RE re("Hail,[a-zA-Z ]+"+Charname+"\\. (.*)", pcrecpp::UTF8());
+	static pcrecpp::RE re("(?:Hail|Sei gegrüßt),[a-zA-Z ]+"+Charname+"\\. (.*)", pcrecpp::UTF8());
 	
 	// Schauen, ob die Nachricht in den Trainermeldungen vorkommt...
 	string msg2;
@@ -107,6 +112,11 @@ bool ARankCounter::CheckTrainerMessage(string trainer, string msg)
 		return true; 		
 	}
 	return false;
+}
+
+void ARankCounter::CheckPetMessage(string pet, string msg)
+{
+    PetRanks[pet]++;
 }
 
 void ARankCounter::PrintRanks()
@@ -131,4 +141,17 @@ void ARankCounter::PrintRanks()
         << totalRanks << std::endl
         << "Total trained: " << totalTrainedRanks << ""
         << std::endl;
+
+    if (PetRanks.begin() != PetRanks.end()) {
+        std::cout << std::endl;
+    }
+
+	for (std::map<string, int>::iterator iPet = PetRanks.begin(); iPet != PetRanks.end(); iPet++)
+	{
+		std::cout
+		    << iPet->first << ": "
+		    << std::setw(4) << iPet->second
+		    << std::endl;
+	}
+
 }
