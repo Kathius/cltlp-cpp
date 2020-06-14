@@ -50,6 +50,7 @@ void ATextLogCollection::ProcessFiles()
     for (std::list<string>::iterator itFilename = fileNames.begin(); itFilename != fileNames.end(); itFilename++) {
 		FILE *pFile = fopen((*itFilename).c_str(), "r");
 		char buffer[256];
+		rc->processNextFile();
 		while (fgets(buffer, 255, pFile))
 		{
 			//if (testreg.PartialMatch(buffer)) std::cout << buffer << std::endl;

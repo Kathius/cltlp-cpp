@@ -13,3 +13,8 @@ void ALogLineProcessor::ProcessLine(string line)
 {
 	return;
 }
+
+void ALogLineProcessor::processNextFile()
+{
+	return;
+}

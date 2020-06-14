@@ -8,6 +8,7 @@ protected:
 	std::list<string>::iterator iTrainer;
 	std::map<string, int> Ranks;
 	std::map<string, int> TrainedRanks;
+	std::map<string, int> RanksToday;
 	std::map<string, int> PetRanks;
 	std::map<string, string> RankMessages;
 	std::list<string>::iterator iTrainerMsg;
@@ -21,6 +22,7 @@ public:
 	virtual ~ARankCounter();
 	
 	void ProcessLine(string Line);
+	void processNextFile();
 	void PrintRanks();
 protected:
 	bool CheckGameMessage(string msg);

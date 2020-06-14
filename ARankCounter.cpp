@@ -68,6 +68,12 @@ ARankCounter::~ARankCounter()
 {
 }
 
+void ARankCounter::processNextFile()
+{
+    RanksToday.clear();
+	return;
+}
+
 void ARankCounter::ProcessLine(string Line)
 {
 	static pcrecpp::RE re(REGEX_OPTIONAL_TIMESTAMP"•((?:Du|Deine?|Your?) .*)(\\r\\n)?$", pcrecpp::UTF8());
@@ -95,6 +101,7 @@ bool ARankCounter::CheckGameMessage(string msg)
 	{
 		Ranks[RankMessages[msg]]++;
 		TrainedRanks[RankMessages[msg]]++;
+		RanksToday[RankMessages[msg]]++;
 		return true;
 	}
 	return false;
@@ -132,8 +139,13 @@ void ARankCounter::PrintRanks()
 		std::cout
 		    << std::setw(20) << *iTrainer << ": "
 		    << std::setw(4) << Ranks[*iTrainer]
-		    << " (" << TrainedRanks[*iTrainer] << ")"
-		    << std::endl;
+		    << " (" << TrainedRanks[*iTrainer] << ")";
+
+        if (RanksToday[*iTrainer] > 0) {
+            std::cout << " +" << RanksToday[*iTrainer];
+        }
+
+		std::cout << std::endl;
 	}
 
     std::cout << std::endl

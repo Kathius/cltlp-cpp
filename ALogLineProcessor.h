@@ -8,6 +8,7 @@ public:
 	virtual ~ALogLineProcessor();
 	
 	virtual void ProcessLine(string Line);
+	virtual void processNextFile();
 };
 
 #endif /*ALOGLINEPROCESSOR_H_*/
