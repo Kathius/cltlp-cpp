@@ -12,7 +12,7 @@ public:
 	ATextLogCollection(string Directory, string Character);
 	virtual ~ATextLogCollection();
 	void SetRankCounter(ALogLineProcessor *p);
-	void ProcessFiles();
+	void ProcessFiles(string endTimestamp);
 };
 
 #endif /*ATEXTLOGCOLLECTION_H_*/

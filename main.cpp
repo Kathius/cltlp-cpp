@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	printf("Arindal Text Log Processor\n\n");
 	
 	bool bLoad=false;
-	string arpath, character;
+	string arpath, character, endTimestamp;
 	
 	if (argc < 4)
 	{
@@ -69,6 +69,13 @@ int main(int argc, char *argv[])
 			fclose(pFile);
 		}
 	}
+
+    for (int i=0;i<argc;i++) {
+        if (!strcmp(argv[i], "-e")) {
+            endTimestamp = argv[i+1];
+            i++;
+        }
+    }
 	
 	try
 	{
@@ -77,7 +84,8 @@ int main(int argc, char *argv[])
 		ATextLogCollection tlc(arpath, character);
 		ARankCounter rc(character);
 		tlc.SetRankCounter(&rc);
-		tlc.ProcessFiles();
+		//string endTimestamp = "6/8/20 8:43:45p";
+		tlc.ProcessFiles(endTimestamp);
 		rc.PrintRanks();
 	}catch (string str)
 	{
