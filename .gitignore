@@ -1,0 +1,14 @@
+*.o
+
+/atlp
+/aclocal.m4
+/configure
+/config.status
+/Makefile.in
+/Makefile
+/install-sh
+/depcomp
+/settings.cfg
+/config.log
+/compile
+/missing
