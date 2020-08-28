@@ -28,6 +28,9 @@ protected:
 	bool CheckGameMessage(string msg);
 	bool CheckTrainerMessage(string trainer, string msg);
 	void CheckPetMessage(string pet, string msg);
+
+private:
+    void readYamlConfig();
 };
 
 #endif /*ARANKCOUNTER_H_*/

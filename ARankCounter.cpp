@@ -6,6 +6,7 @@
 #include <list>
 #include <map>
 
+#include "yaml-cpp/yaml.h"
 #include "pcrecpp.h"
 #include "ALogLineProcessor.h"
 #include "ARankCounter.h"
@@ -17,45 +18,9 @@
 ARankCounter::ARankCounter(string character)
 {
 	Charname = character;
-	
-	bool bTrainer = true;
-	FILE *pFile=NULL;
-	pFile = fopen("trainers.cfg", "r");
-	char buffer[256];
-	try
-	{
-		while (fgets(buffer, 255, pFile))
-		{
-			if (!strcmp("\r\n", buffer))
-			{
-				bTrainer=false;
-				continue;
-			}
-			if (bTrainer)
-			{
-				string Trainer, Message;
-				if (!pcrecpp::RE("([a-zA-Z' ]+)\\t(.*)\\r\\n", pcrecpp::UTF8()).FullMatch(buffer, &Trainer, &Message))
-				{
-					throw "Fehler in trainers.cfg";
-				}
-				RankMessages[Message] = Trainer;
-				Trainers.push_back(Trainer);
-			}else
-			{
-				string Message;
-				int Ranks;
-				pcrecpp::RE("(\\d+)\\t(.*)\\r\\n", pcrecpp::UTF8()).FullMatch(buffer, &Ranks, &Message);
-				TrainerMessages[Message] = Ranks;
-			}
-		}
-	}catch (string str)
-	{
-		fclose(pFile);
-		throw str;
-	}
-	fclose(pFile);
 
-	// Trainer-Regex
+	readYamlConfig();
+
 	Regexes["Trainers"] = "";
 	for (iTrainer=Trainers.begin();iTrainer!=Trainers.end();iTrainer++)
 	{
@@ -66,6 +31,23 @@ ARankCounter::ARankCounter(string character)
 
 ARankCounter::~ARankCounter()
 {
+}
+
+void ARankCounter::readYamlConfig()
+{
+    YAML::Node trainers = YAML::LoadFile("trainers.yaml");
+    for (size_t iTrainer = 0; iTrainer < trainers["trainers"].size(); iTrainer++) {
+        string message = trainers["trainers"][iTrainer]["message"].as<string>();
+        string trainer = trainers["trainers"][iTrainer]["name"].as<string>();
+        RankMessages[message] = trainer;
+        Trainers.push_back(trainer);
+    }
+
+    for (size_t iMessage = 0; iMessage < trainers["progressmessages"].size(); iMessage++) {
+        string message = trainers["progressmessages"][iMessage]["message"].as<string>();
+        int ranks = trainers["progressmessages"][iMessage]["ranks"].as<int>();
+        TrainerMessages[message] = ranks;
+    }
 }
 
 void ARankCounter::processNextFile()
