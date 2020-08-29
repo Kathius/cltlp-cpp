@@ -12,46 +12,71 @@ trainers:
     class: Common
   - name: Skea Brightfur
     message: Your study of skinning seems to be paying off.
+    class: Common
+    subclass: Coining
   - name: Awaria
     message: You seem to heal yourself more easily with the moonstone.
+    class: Healer
   - name: Eva
     message: You seem to heal more effectively.
+    class: Healer
   - name: Faustus
     message: You notice yourself healing others faster.
+    class: Healer
   - name: Higgrus
     message: ""
+    class: Healer
   - name: Horus
     message: You seem to heal people closer to death now.
+    class: Healer
   - name: Proximus
     message: You seem to heal from further away now.
+    class: Healer
   - name: Respia
     message: You seem to recover spiritual energy faster.
+    class: Healer
   - name: Sespus
     message: You notice that you can use your healing ability longer.
+    class: Healer
   - name: Sprite
     message: Your healing spirit improves.
+    class: Healer
   - name: Sylpha
     message: You understand the walking self-heal technique better.
+    class: Healer
   - name: Atkus
     message: You seem to attack more precisely now.
+    class: Fighter
   - name: Balthus
     message: ""
+    class: Fighter
   - name: Darkus
     message: ""
+    class: Fighter
   - name: Detha
     message: You seem to be defending yourself better.
+    class: Fighter
   - name: Evus
     message: You seem to fight more effectively now.
+    class: Fighter
   - name: Histia
     message: ""
+    class: Fighter
   - name: Regia
     message: You notice your balance recovering more quickly.
+    class: Fighter
   - name: Swengus
     message: You notice your balance and recovery improving.
+    class: Fighter
   - name: Poly Carver
     message: You feel more skilled in the craft of woodworking.
+    class: Common
+    subclass: Crafting
   - name: Forgus
     message: Your knowledge of blacksmithing improves.
+    class: Common
+    subclass: Crafting
+
 progressmessages:
   - message: It is good to see you.
     ranks: 10
