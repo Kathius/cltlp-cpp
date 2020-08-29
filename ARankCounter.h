@@ -5,6 +5,7 @@ class ARankCounter : public ALogLineProcessor
 {
 protected:
 	std::list<string> Trainers;
+	std::map<string, string> TrainerClasses;
 	std::list<string>::iterator iTrainer;
 	std::map<string, int> Ranks;
 	std::map<string, int> TrainedRanks;

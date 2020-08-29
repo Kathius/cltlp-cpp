@@ -41,6 +41,10 @@ void ARankCounter::readYamlConfig()
         string trainer = trainers["trainers"][iTrainer]["name"].as<string>();
         RankMessages[message] = trainer;
         Trainers.push_back(trainer);
+        if (trainers["trainers"][iTrainer]["class"]) {
+            string trainerClass = trainers["trainers"][iTrainer]["class"].as<string>();
+            TrainerClasses[trainer] = trainerClass;
+        }
     }
 
     for (size_t iMessage = 0; iMessage < trainers["progressmessages"].size(); iMessage++) {
@@ -81,9 +85,10 @@ bool ARankCounter::CheckGameMessage(string msg)
 	// Schauen, ob die Nachricht in den Rankmeldungen vorkommt...
 	if (RankMessages.find(msg) != RankMessages.end())
 	{
-		Ranks[RankMessages[msg]]++;
-		TrainedRanks[RankMessages[msg]]++;
-		RanksToday[RankMessages[msg]]++;
+	    string trainer = RankMessages[msg];
+		Ranks[trainer]++;
+		TrainedRanks[trainer]++;
+		RanksToday[trainer]++;
 		return true;
 	}
 	return false;
@@ -98,7 +103,7 @@ bool ARankCounter::CheckTrainerMessage(string trainer, string msg)
 	if (TrainerMessages.find(msg2) != TrainerMessages.end())
 	{
 		Ranks[trainer] = max(Ranks[trainer], TrainerMessages[msg2]);
-		return true; 		
+		return true;
 	}
 	return false;
 }
@@ -112,6 +117,10 @@ void ARankCounter::PrintRanks()
 {
     unsigned int totalRanks = 0;
     unsigned int totalTrainedRanks = 0;
+
+	std::map<string, int> ClassRanks;
+	std::map<string, int> TrainedClassRanks;
+	std::map<string, int> ClassRanksToday;
 
 	for (iTrainer=Trainers.begin();iTrainer!=Trainers.end();iTrainer++)
 	{
@@ -128,7 +137,29 @@ void ARankCounter::PrintRanks()
         }
 
 		std::cout << std::endl;
+
+        if (TrainerClasses.find(*iTrainer) != TrainerClasses.end()) {
+            string trainerClass = TrainerClasses[*iTrainer];
+            ClassRanks[trainerClass] += Ranks[*iTrainer];
+            TrainedClassRanks[trainerClass] += TrainedRanks[*iTrainer];
+            ClassRanksToday[trainerClass] += RanksToday[*iTrainer];
+        }
 	}
+
+    std::cout << std::endl;
+
+    for (std::map<string, int>::iterator iClassRanks=ClassRanks.begin();iClassRanks!=ClassRanks.end();iClassRanks++) {
+        std::cout
+            << iClassRanks->first << ":"
+            << std::setw(4) << iClassRanks->second
+            << " (" << TrainedClassRanks[iClassRanks->first] << ")";
+
+        if (ClassRanksToday[iClassRanks->first] > 0) {
+            std::cout << " +" << ClassRanksToday[iClassRanks->first];
+        }
+
+        std::cout << std::endl;
+    }
 
     std::cout << std::endl
         << "Total: "
