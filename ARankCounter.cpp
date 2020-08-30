@@ -122,40 +122,40 @@ void ARankCounter::PrintRanks()
 	std::map<string, int> TrainedClassRanks;
 	std::map<string, int> ClassRanksToday;
 
-	for (iTrainer=Trainers.begin();iTrainer!=Trainers.end();iTrainer++)
+	for (string trainer : Trainers)
 	{
-	    totalRanks += Ranks[*iTrainer];
-	    totalTrainedRanks += TrainedRanks[*iTrainer];
-		if (Ranks[*iTrainer] == 0 && TrainedRanks[*iTrainer] == 0 ) continue;
+	    totalRanks += Ranks[trainer];
+	    totalTrainedRanks += TrainedRanks[trainer];
+		if (Ranks[trainer] == 0 && TrainedRanks[trainer] == 0 ) continue;
 		std::cout
-		    << std::setw(20) << *iTrainer << ": "
-		    << std::setw(4) << Ranks[*iTrainer]
-		    << " (" << TrainedRanks[*iTrainer] << ")";
+		    << std::setw(20) << trainer << ": "
+		    << std::setw(4) << Ranks[trainer]
+		    << " (" << TrainedRanks[trainer] << ")";
 
-        if (RanksToday[*iTrainer] > 0) {
-            std::cout << " +" << RanksToday[*iTrainer];
+        if (RanksToday[trainer] > 0) {
+            std::cout << " +" << RanksToday[trainer];
         }
 
 		std::cout << std::endl;
 
-        if (TrainerClasses.find(*iTrainer) != TrainerClasses.end()) {
-            string trainerClass = TrainerClasses[*iTrainer];
-            ClassRanks[trainerClass] += Ranks[*iTrainer];
-            TrainedClassRanks[trainerClass] += TrainedRanks[*iTrainer];
-            ClassRanksToday[trainerClass] += RanksToday[*iTrainer];
+        if (TrainerClasses.find(trainer) != TrainerClasses.end()) {
+            string trainerClass = TrainerClasses[trainer];
+            ClassRanks[trainerClass] += Ranks[trainer];
+            TrainedClassRanks[trainerClass] += TrainedRanks[trainer];
+            ClassRanksToday[trainerClass] += RanksToday[trainer];
         }
 	}
 
     std::cout << std::endl;
 
-    for (std::map<string, int>::iterator iClassRanks=ClassRanks.begin();iClassRanks!=ClassRanks.end();iClassRanks++) {
+    for (std::pair<string, int> classRank : ClassRanks) {
         std::cout
-            << iClassRanks->first << ":"
-            << std::setw(4) << iClassRanks->second
-            << " (" << TrainedClassRanks[iClassRanks->first] << ")";
+            << classRank.first << ":"
+            << std::setw(4) << classRank.second
+            << " (" << TrainedClassRanks[classRank.first] << ")";
 
-        if (ClassRanksToday[iClassRanks->first] > 0) {
-            std::cout << " +" << ClassRanksToday[iClassRanks->first];
+        if (ClassRanksToday[classRank.first] > 0) {
+            std::cout << " +" << ClassRanksToday[classRank.first];
         }
 
         std::cout << std::endl;
@@ -171,11 +171,11 @@ void ARankCounter::PrintRanks()
         std::cout << std::endl;
     }
 
-	for (std::map<string, int>::iterator iPet = PetRanks.begin(); iPet != PetRanks.end(); iPet++)
+	for (std::pair<string, int> petRank : PetRanks)
 	{
 		std::cout
-		    << iPet->first << ": "
-		    << std::setw(4) << iPet->second
+		    << petRank.first << ": "
+		    << std::setw(4) << petRank.second
 		    << std::endl;
 	}
 
