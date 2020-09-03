@@ -150,7 +150,7 @@ void ARankCounter::PrintRanks()
 
     for (std::pair<string, int> classRank : ClassRanks) {
         std::cout
-            << classRank.first << ":"
+            << classRank.first << ": "
             << std::setw(4) << classRank.second
             << " (" << TrainedClassRanks[classRank.first] << ")";
 
