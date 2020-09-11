@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <map>
+#include <set>
 
 #include <pcrecpp.h>
 

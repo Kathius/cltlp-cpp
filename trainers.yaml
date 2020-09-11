@@ -10,16 +10,19 @@ trainers:
   - name: Master Bodrus
     message: Your body feels stronger.
     class: Common
+    isCombinationTrainer: yes
   - name: Skea Brightfur
     message: Your study of skinning seems to be paying off.
     class: Common
-    subclass: Coining
+    subclass: Bounty
+
   - name: Awaria
     message: You seem to heal yourself more easily with the moonstone.
     class: Healer
   - name: Eva
     message: You seem to heal more effectively.
     class: Healer
+    isCombinationTrainer: yes
   - name: Faustus
     message: You notice yourself healing others faster.
     class: Healer
@@ -41,9 +44,11 @@ trainers:
   - name: Sprite
     message: Your healing spirit improves.
     class: Healer
+    isCombinationTrainer: yes
   - name: Sylpha
     message: You understand the walking self-heal technique better.
     class: Healer
+
   - name: Atkus
     message: You seem to attack more precisely now.
     class: Fighter
@@ -59,6 +64,7 @@ trainers:
   - name: Evus
     message: You seem to fight more effectively now.
     class: Fighter
+    isCombinationTrainer: yes
   - name: Histia
     message: ""
     class: Fighter
@@ -68,6 +74,7 @@ trainers:
   - name: Swengus
     message: You notice your balance and recovery improving.
     class: Fighter
+    isCombinationTrainer: yes
   - name: Poly Carver
     message: You feel more skilled in the craft of woodworking.
     class: Common

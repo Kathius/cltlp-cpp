@@ -5,6 +5,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <set>
 
 #include "yaml-cpp/yaml.h"
 #include "pcrecpp.h"
@@ -44,6 +45,12 @@ void ARankCounter::readYamlConfig()
         if (trainers["trainers"][iTrainer]["class"]) {
             string trainerClass = trainers["trainers"][iTrainer]["class"].as<string>();
             TrainerClasses[trainer] = trainerClass;
+        }
+        if (
+            trainers["trainers"][iTrainer]["isCombinationTrainer"]
+            && trainers["trainers"][iTrainer]["isCombinationTrainer"].as<bool>() == true
+        ) {
+            combinationTrainers.insert(trainer);
         }
     }
 
@@ -124,7 +131,9 @@ void ARankCounter::PrintRanks()
 
 	for (string trainer : Trainers)
 	{
-	    totalRanks += Ranks[trainer];
+	    if (combinationTrainers.find(trainer) == combinationTrainers.end()) {
+	        totalRanks += Ranks[trainer];
+        }
 	    totalTrainedRanks += TrainedRanks[trainer];
 		if (Ranks[trainer] == 0 && TrainedRanks[trainer] == 0 ) continue;
 		std::cout
@@ -140,7 +149,9 @@ void ARankCounter::PrintRanks()
 
         if (TrainerClasses.find(trainer) != TrainerClasses.end()) {
             string trainerClass = TrainerClasses[trainer];
-            ClassRanks[trainerClass] += Ranks[trainer];
+            if (combinationTrainers.find(trainer) == combinationTrainers.end()) {
+                ClassRanks[trainerClass] += Ranks[trainer];
+            }
             TrainedClassRanks[trainerClass] += TrainedRanks[trainer];
             ClassRanksToday[trainerClass] += RanksToday[trainer];
         }
