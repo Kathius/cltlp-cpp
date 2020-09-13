@@ -71,19 +71,20 @@ void ARankCounter::ProcessLine(string Line)
 {
 	static pcrecpp::RE re(REGEX_OPTIONAL_TIMESTAMP"•((?:Du|Deine?|Your?) .*)(\\r\\n)?$", pcrecpp::UTF8());
 	static pcrecpp::RE re2(REGEX_OPTIONAL_TIMESTAMP"("+Regexes["Trainers"]+") (?:sagt|says), \"(.*)\"(\\r\\n)?$", pcrecpp::UTF8());
-	static pcrecpp::RE petMessage(REGEX_OPTIONAL_TIMESTAMP"\\* (.*) grows stronger.(\\r\\n)?$", pcrecpp::UTF8());
+	static pcrecpp::RE petMessage(REGEX_OPTIONAL_TIMESTAMP"\\* (.*) grows (much )?stronger.(?: \\(But you must go to the stable to train more.\\))?(\\r\\n)?$", pcrecpp::UTF8());
 	string msg;
 	string trainer;
 	string pet;
+	string muchStronger;
 	if (re.FullMatch(Line, &msg))
 	{
 		CheckGameMessage(msg);
-	}else if (re2.FullMatch(Line, &trainer, &msg))
+	} else if (re2.FullMatch(Line, &trainer, &msg))
 	{
 		CheckTrainerMessage(trainer, msg);
-	}else if (petMessage.FullMatch(Line, &pet, &msg))
+	} else if (petMessage.FullMatch(Line, &pet, &muchStronger))
     {
-        CheckPetMessage(pet, msg);
+        CheckPetMessage(pet, muchStronger);
     }
 }
 
@@ -115,9 +116,14 @@ bool ARankCounter::CheckTrainerMessage(string trainer, string msg)
 	return false;
 }
 
-void ARankCounter::CheckPetMessage(string pet, string msg)
+void ARankCounter::CheckPetMessage(string pet, string muchStronger)
 {
-    PetRanks[pet]++;
+    if (muchStronger == "much ") {
+        majorPetRanks[pet]++;
+        PetRanks[pet] = 0;
+    } else {
+        PetRanks[pet]++;
+    }
 }
 
 void ARankCounter::PrintRanks()
@@ -185,8 +191,10 @@ void ARankCounter::PrintRanks()
 	for (std::pair<string, int> petRank : PetRanks)
 	{
 		std::cout
-		    << petRank.first << ": "
-		    << std::setw(4) << petRank.second
+		    << std::setw(12) << petRank.first << ": "
+		    << majorPetRanks[petRank.first]
+		    << " + "
+		    << petRank.second
 		    << std::endl;
 	}
 

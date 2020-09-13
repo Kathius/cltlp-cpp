@@ -12,6 +12,7 @@ protected:
 	std::map<string, int> TrainedRanks;
 	std::map<string, int> RanksToday;
 	std::map<string, int> PetRanks;
+	std::map<string, int> majorPetRanks;
 	std::map<string, string> RankMessages;
 	std::list<string>::iterator iTrainerMsg;
 	std::map<string, int> TrainerMessages;
