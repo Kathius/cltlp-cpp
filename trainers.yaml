@@ -27,7 +27,7 @@ trainers:
     message: You notice yourself healing others faster.
     class: Healer
   - name: Higgrus
-    message: ""
+    message: You seem to be able to take more damage now.
     class: Healer
   - name: Horus
     message: You seem to heal people closer to death now.
