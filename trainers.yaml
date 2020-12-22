@@ -113,3 +113,27 @@ progressmessages:
     ranks: 450
   - message: You are becoming a master of our art.
     ranks: 500
+  - message: Your dedication is commendable.
+    ranks: 550
+  - message: You show great devotion to your studies.
+    ranks: 600
+  - message: You are a credit to our craft.
+    ranks: 650
+  - message: Few indeed are your peers.
+    ranks: 700
+  - message: Your devotion to the craft is exemplary.
+    ranks: 750
+  - message: It is always good to greet a respected colleague.
+    ranks: 800
+  - message: You are truly a grand master.
+    ranks: 900
+  - message: Let us search for more we might learn together.
+    ranks: 1000
+  - message: Your persistence is an example to us all.
+    ranks: 1250
+  - message: Your skill astounds me.
+    ranks: 1500
+  - message: You have progressed further than most.
+    ranks: 1750
+  - message: You are nearly peerless.
+    ranks: 2000
