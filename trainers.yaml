@@ -48,6 +48,9 @@ trainers:
   - name: Sylpha
     message: You understand the walking self-heal technique better.
     class: Healer
+  - name: Virgil
+    message: You have more purgatory pendant knowledge.
+    class: Healer
 
   - name: Atkus
     message: You seem to attack more precisely now.
