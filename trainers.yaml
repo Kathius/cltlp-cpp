@@ -35,6 +35,9 @@ trainers:
   - name: Proximus
     message: You seem to heal from further away now.
     class: Healer
+  - name: Radium
+    message: You learn to better heal others nearby.
+    class: Healer
   - name: Respia
     message: You seem to recover spiritual energy faster.
     class: Healer
